@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const app = express()
 const db = require('./queries')
 const port = 3000 //go to localhost:3000
+var fs = require('fs')
 
 app.use(bodyParser.json())
 app.use(
@@ -12,7 +13,12 @@ app.use(
 )
 
 app.get('/', (request, response) => {
-  response.json({ info: 'Node.js, Express, and Postgres API' })
+  fs.readFile('page1.html', function(err, data) {
+    response.writeHead(200, {'Content-Type': 'text/html'});
+    response.write(data);
+    response.end();
+  })
+  //response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
 //calling methods from queries.js
