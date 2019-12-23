@@ -9,7 +9,6 @@ const pool = new Pool({
   port: 5432,
 })
 
-
 const getUsers = (request, response) => {
   //showing everything from table users after going to localhost:3000/users
   pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
