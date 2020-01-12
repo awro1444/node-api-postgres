@@ -1,0 +1,37 @@
+<html>
+    <head>
+    <title>Multiplication Table Generator</title>
+
+    <script language="javascript" type="text/javascript">
+
+    function generateTable()
+    {
+      //var myVar = prompt("A number?", "");
+      var myVar = document.forms.multTables.x.value;
+      var myString = "<tr><th>"+ myVar + " times tables</th></tr>";
+      for (i=1; i<=myVar; i++)
+      {
+        myString += "<tr><td>";
+       myString += i+ " x " +myVar+ " = " +(i*myVar)+ "\n";
+       myString += "</td></tr>";
+      }
+      document.getElementById('t').innerHTML = myString;
+      return false;
+    }
+
+  </script>
+
+  </head>
+  <body>
+  <h1>Times Tables</h1>
+  <form name="multTables">
+
+  Enter a number<input type="text" name="number" id="x">
+  <input type="button" name="button1"  value="Show Table" onclick="generateTable()">
+
+  <table border="1" id="t">
+
+  </table>
+  </form>
+  </body>
+  </html>

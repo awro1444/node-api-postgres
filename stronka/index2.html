@@ -9,33 +9,20 @@
 <h1>LOVE HOTEL</h1>
 </div>
 <div class="bg"></div>
-<div id="containers2">
-<div style="float: left;">
-	<div id="rcorners1" style="margin-right: 20px;clear: both;margin-bottom: 10px">
-<p>Zalogowany jako:</p>
-<p>Login</p>
-</div>
-<div id="rcorners3" style="clear: both;">
-<p>Twoje rezerwacje</p>
-</div>
-</div>
-
-	<div id=rcorners22 style="float: right;">
-	<form action="index2.html" method="post">
-
-  <div class="container">
-  	<div><b>Rezerwuj<b></div>
-    <label for="psw">Liczba osób</label>
-    <input type="password" placeholder="Liczba osób" name="psw" required>
-    <label for="psw">Liczba osób</label>
-    <input type="password" placeholder="Liczba osób" name="psw" required>
-    <label for="psw">Liczba łózek małżeńśkich</label>
-    <input type="password" placeholder="Liczba osób" name="psw" required>
-    <label for="psw">Data</label>
-    <input type="password" placeholder="Liczba osób" name="psw" required>
-    <label for="psw">Tutaj cena</label>
-    <button type="submit" style="background-color: skyblue;">Rezerwuj</button>
-  </div>
+<div id="containers2" align='center'>
+	<div id="rcorners11">Dokonaj Rezerwacji
+		<p></p>
+		<form action="/doRezerwacja" method="post">
+  Id - tego potem nie bedzie:<br>
+  <input type="text" name="r">
+  <br>Imię<br>
+  <input type="text" name="imie">
+  <br>Nazwisko<br>
+	<input type="text" name="nazwisko">
+  <br>Numer pokoju<br>
+	<input type="text" name="p">
+  <br><br>
+  <input type="submit" value="Submit">
 </form>
 </div>
 

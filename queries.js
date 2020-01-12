@@ -2,16 +2,17 @@ const Pool = require('pg').Pool
 
 //database user but how to share a database XD?
 const pool = new Pool({
-  user: 'rozia',
+  user: 'me',
   host: 'localhost',
   database: 'api',
-  password: 'rozia',
+  password: 'anka',
   port: 5432,
 })
+var alert
 
-const getUsers = (request, response) => {
+const getRezerwacje = (request, response) => {
   //showing everything from table users after going to localhost:3000/users
-  pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
+  pool.query('SELECT * FROM rezerwacje', (error, results) => {
     if (error) {
       throw error
     }
@@ -19,28 +20,61 @@ const getUsers = (request, response) => {
   })
 }
 
-const getUserById = (request, response) => {
+const getPokoje = (request, response) => {
+
+  pool.query('SELECT * FROM pokoje', (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
+const getStandardy = (request, response) => {
+
+  pool.query('SELECT * FROM standardy', (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+/*
+const getStandardy = (request, response) => {
   const id = parseInt(request.params.id)
 
-  pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
+  pool.query('SELECT * FROM standardy', [id], (error, results) => {
     if (error) {
       throw error
     }
     response.status(200).json(results.rows)
   })
 }
+*/
+const createRezerwacja = (request, response) => {
+  const { r, imie, nazwisko, p } = request.body
 
-const createUser = (request, response) => {
-  const { name, email } = request.body
-
-  pool.query('INSERT INTO users (name, email) VALUES ($1, $2)', [name, email], (error, results) => {
+  pool.query('INSERT INTO rezerwacje (r, imie, nazwisko, p) VALUES ($1, $2,$3,$4)', [r, imie, nazwisko, p], (error, results) => {
     if (error) {
       throw error
     }
-    response.status(201).send(`User added with ID: ${result.insertId}`)
+    response.status(201).send(`Dodano rezerwację`)
   })
 }
 
+const deleteRezerwacja = (request, response) => {
+  //console.log(request.param("r"));
+  const r = request.param("r");
+
+  pool.query('DELETE FROM rezerwacje WHERE r = $1', [r], (error, results) => {
+    if (error) {
+      throw error;
+    }
+    response.status(200).send(`User modified with ID: ${r}`)
+  })
+}
+
+/*
 const updateUser = (request, response) => {
   const id = parseInt(request.params.id)
   const { name, email } = request.body
@@ -66,12 +100,16 @@ const deleteUser = (request, response) => {
     }
     response.status(200).send(`User deleted with ID: ${id}`)
   })
-}
+}*/
 
 module.exports = {
-  getUsers,
-  getUserById,
+  getRezerwacje,
+  getPokoje,
+  getStandardy,
+  createRezerwacja,
+  deleteRezerwacja,
+  /*
   createUser,
   updateUser,
-  deleteUser,
+  deleteUser,*/
 }

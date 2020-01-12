@@ -26,11 +26,13 @@ app.get('/', (request, response) => {
 })
 
 //calling methods from queries.js
-app.get('/users', db.getUsers)
-app.get('/users/:id', db.getUserById)
-app.post('/users', db.createUser)
-app.put('/users/:id', db.updateUser)
-app.delete('/users/:id', db.deleteUser)
+app.get('/rezerwacje', db.getRezerwacje)
+app.get('/pokoje', db.getPokoje)
+app.get('/standardy', db.getStandardy)
+app.post('/dorezerwacja', db.createRezerwacja)
+app.post('/deleterez', db.deleteRezerwacja)
+//app.put('/users/:id', db.updateUser)
+//app.delete('/users/:id', db.deleteUser)
 
 app.get('/index4.html', (request, response) => {
   fs.readFile('stronka/index4.html', function(err, data) {
@@ -43,6 +45,15 @@ app.get('/index4.html', (request, response) => {
 
 app.get('/index3.html', (request, response) => {
   fs.readFile('stronka/index3.html', function(err, data) {
+    response.writeHead(200, {'Content-Type': 'text/html'});
+    response.write(data);
+    response.end();
+  })
+  ///response.json({ info: 'Node.js, Express, and Postgres API' })
+})
+
+app.post('/index6.html', (request, response) => {
+  fs.readFile('stronka/index6.html', function(err, data) {
     response.writeHead(200, {'Content-Type': 'text/html'});
     response.write(data);
     response.end();

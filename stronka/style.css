@@ -12,7 +12,7 @@ body, html {
   height: 100%;
   width: 100%;
 
- 
+
   z-index: -100;
 
   position: absolute;
@@ -21,7 +21,7 @@ body, html {
   top: 0px;
   bottom: 0px;
 
-  /* Center and scale the image nicely 
+  /* Center and scale the image nicely
   -webkit-background-size: cover;
   -moz-background-size: cover;*/
   background-position: center;
@@ -33,20 +33,33 @@ body, html {
   float: left;
   border-radius: 25px;
   background: white;
-  padding: 20px; 
+  padding: 20px;
   width: 200px;
   height: 200px;
   border-style: solid;
   border-width: 10px;
-  border-color: orange; 
-  
+  border-color: orange;
+
+}
+#rcorners11 {
+  position: absolute;
+  top: 10%;
+  border-radius: 25px;
+  background: white;
+  padding: 20px;
+  width: 200px;
+  height:350px;
+  border-style: solid;
+  border-width: 10px;
+  border-color: orange;
+
 }
 
 #rcorners2 {
   float: left;
   border-radius: 25px;
   background: white;
-  padding: 20px; 
+  padding: 20px;
   width: 200px;
   height: 200px;
   border-style: solid;
@@ -58,7 +71,7 @@ body, html {
   float: left;
   border-radius: 25px;
   background: white;
-  padding: 20px; 
+  padding: 20px;
   width: 200px;
   height: 470px;
   border-style: solid;
@@ -70,7 +83,7 @@ body, html {
   float: left;
   border-radius: 25px;
   background: white;
-  padding: 20px; 
+  padding: 20px;
   width: 200px;
   height: 200px;
   border-style: solid;
@@ -79,7 +92,7 @@ body, html {
 }
 
 #containers {
-	
+
 	position: fixed;
 	left: 40%;
 	top:50%;
@@ -88,7 +101,7 @@ body, html {
  }
 
  #containers2 {
-	
+
 	position: fixed;
 	left: 40%;
 	top:23%;
@@ -97,7 +110,7 @@ body, html {
  }
 
  .container2 {
-	
+
 	position: fixed;
 	left: 40%;
 	top:50%;
