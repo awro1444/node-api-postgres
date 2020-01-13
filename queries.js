@@ -8,7 +8,6 @@ const pool = new Pool({
   password: 'anka',
   port: 5432,
 })
-var alert
 
 const getRezerwacje = (request, response) => {
   //showing everything from table users after going to localhost:3000/users
@@ -26,6 +25,19 @@ const getPokoje = (request, response) => {
     if (error) {
       throw error
     }
+    response.status(200).json(results.rows)
+  })
+}
+
+const getWolnepokoje = (request, response) => {
+
+  pool.query('SELECT * FROM pokoje where dostepnosc=true', (error, results) => {
+    if (error) {
+      throw error
+    }
+    var wp = JSON.stringify(results.rows);
+    choose_free_rooms(wp)
+    //console.log(wp);
     response.status(200).json(results.rows)
   })
 }
@@ -52,13 +64,13 @@ const getStandardy = (request, response) => {
 }
 */
 const createRezerwacja = (request, response) => {
-  const { r, imie, nazwisko, p } = request.body
+  const { imie, nazwisko, p } = request.body
 
-  pool.query('INSERT INTO rezerwacje (r, imie, nazwisko, p) VALUES ($1, $2,$3,$4)', [r, imie, nazwisko, p], (error, results) => {
+  pool.query('INSERT INTO rezerwacje (imie, nazwisko, p) VALUES ($1, $2,$3)', [imie, nazwisko, p], (error, results) => {
     if (error) {
       throw error
     }
-    response.status(201).send(`Dodano rezerwację`)
+    response.status(201).send(`<h4>Dodano rezerwację</h4>`)
   })
 }
 
@@ -70,9 +82,49 @@ const deleteRezerwacja = (request, response) => {
     if (error) {
       throw error;
     }
-    response.status(200).send(`User modified with ID: ${r}`)
+    response.status(200).send(`Usunięto rezerwację: ${r}`)
   })
 }
+
+function choose_free_rooms(free_rooms){
+  console.log(free_rooms);
+  var list = free_rooms;
+  var selector = '#table';
+  var cols = Headers(list, selector);
+  for (var i = 0; i < list.length; i++) {
+                var row = ('<tr/>');
+                for (var colIndex = 0; colIndex < cols.length; colIndex++)
+                {
+                    var val = list[i][cols[colIndex]];
+
+                    // If there is any key, which is matching
+                    // with the column name
+                    if (val == null) val = "";
+                        row.append(('<td/>').html(val));
+                }
+
+                // Adding each row to the table
+                $(selector).append(row);
+            }
+}
+
+function Headers(list, selector) {
+            var columns = [];
+            var header = ('<tr/>');
+
+            for (var i = 0; i < list.length; i++) {
+                var row = list[i];
+
+                for (var k in row) {
+                    if ($.inArray(k, columns) == -1) {
+                        columns.push(k);
+
+                        // Creating the header
+                        header.append(('<th/>').html(k));
+                    }
+                }
+            }
+  }
 
 /*
 const updateUser = (request, response) => {
@@ -105,6 +157,7 @@ const deleteUser = (request, response) => {
 module.exports = {
   getRezerwacje,
   getPokoje,
+  getWolnepokoje,
   getStandardy,
   createRezerwacja,
   deleteRezerwacja,

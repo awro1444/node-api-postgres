@@ -29,6 +29,7 @@ app.get('/', (request, response) => {
 app.get('/rezerwacje', db.getRezerwacje)
 app.get('/pokoje', db.getPokoje)
 app.get('/standardy', db.getStandardy)
+app.get('/wolnepokoje', db.getWolnepokoje)
 app.post('/dorezerwacja', db.createRezerwacja)
 app.post('/deleterez', db.deleteRezerwacja)
 //app.put('/users/:id', db.updateUser)

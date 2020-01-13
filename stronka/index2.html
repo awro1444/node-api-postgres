@@ -13,16 +13,25 @@
 	<div id="rcorners11">Dokonaj Rezerwacji
 		<p></p>
 		<form action="/doRezerwacja" method="post">
-  Id - tego potem nie bedzie:<br>
-  <input type="text" name="r">
   <br>Imię<br>
   <input type="text" name="imie">
   <br>Nazwisko<br>
 	<input type="text" name="nazwisko">
+	<br>Wybierz standard<br>
+	<select name="s">
+		 <option value="1">Królewski</option>
+		 <option value="2">500+</option>
+		 <option value="3">Nudny</option>
+		 <option value="4">Friendzone</option>
+		 <option value="5">Trio</option>
+		 <option value="6">Trójkąty i kwadraty</option>
+</select>
   <br>Numer pokoju<br>
-	<input type="text" name="p">
+	<select name="p" id=free_rooms>
+		 <option value="201">201</option>
+</select>
   <br><br>
-  <input type="submit" value="Submit">
+  <input type="submit" value="Rezerwuj">
 </form>
 </div>
 
