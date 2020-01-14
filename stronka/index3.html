@@ -5,7 +5,8 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 <script  type="text/javascript" src = "C:\Users\Rozanna\Documents\GitHub\node-api-postgres\queries.js"></script>
 <script  type="text/javascript" src = "C:\Users\Rozanna\Documents\GitHub\node-api-postgres\index.js"></script>
-
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+<script type="text/javascript" src="wolnepokoje.json"></script>
 </head>
 <body style="overflow: hidden;height: auto;">
 <div align="center">
@@ -13,9 +14,37 @@
 </div>
 <div class="bg"></div>
 <table id = 'pokoje'></table>
+<iframe id='iframe' src = 'wolnepokoje.json'> </iframe>
+<table>
+        <tr>
+            <th> Id Pokoju</th>
+            <th> Piętro </th>
+            <th> Numer Standardu </th>
+            <th> Dostępność </th>
+        </tr>
+    </table>
 </body>
 <script>
-var eh = document.getElementById("pokoje");
+$(function() {
+            $.getJSON('wolnepokoje.json', function(data) {
+                var tr;
+               for (var i = 0; i < data.length; i++) {
+                  //<!--  tr.append("<td>" + data[i][0] + "</td>");-->
+                  tr = $('<tr/>');
+                    tr.append("<td>" + data[i].p + "</td>");
+                    tr.append("<td>" + data[i].pietro + "</td>");
+                    tr.append("<td>" + data[i].s + "</td>");
+                    tr.append("<td>" + data[i].dostepnosc + "</td>");
+                    $('table').append(tr);
+                  }
 
+            });
+        });
+//var mydata = JSON.parse(wolnepokoje);
+//console.log(mydata);
+ //alert(mydata[0].s);
+ //alert(mydata[0].age);
+ //alert(mydata[1].name);
+ //alert(mydata[1].age);
 </script>
 </HTML>
