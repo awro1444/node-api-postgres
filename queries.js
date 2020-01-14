@@ -88,18 +88,61 @@ const createRezerwacja = (request, response) => {
     }
     response.status(201).send(`<h4>Dodano rezerwację</h4>`)
   })
+
+  pool.query('UPDATE pokoje SET dostepnosc = false WHERE p = $1', [p], (error, results) => {
+    if (error) {
+      throw error
+      console.log('aaaaaaaaaaa')
+    } else {
+      console.log('bbbbbbbb')
+      console.log(results)
+    }
+    //response.status(200).send('Zmieniono status pokoju nr $1', [p])
+  })
 }
 
 const deleteRezerwacja = (request, response) => {
   //console.log(request.param("r"));
+  var numer_pokoju;
+  var p;
   const r = request.param("r");
-
-  pool.query('DELETE FROM rezerwacje WHERE r = $1', [r], (error, results) => {
+  pool.query('SELECT p FROM rezerwacje WHERE r = $1', [r], (error, results) => {
     if (error) {
-      throw error;
+      throw error
+    } else {
+      //console.log('pokoj numer: ')
+      //console.log(results)
+      console.log('pokoj:')
+      numer_pokoju = parseInt(results.rows[0].p)
+      p = results.rows[0].p
+      console.log(numer_pokoju)
+      console.log(p)
+      pool.query('DELETE FROM rezerwacje WHERE r = $1', [r], (error, results) => {
+        if (error) {
+          throw error;
+        }
+        response.status(200).send(`Usunięto rezerwację: ${r}`)
+
+        pool.query('UPDATE pokoje SET dostepnosc = true WHERE p = $1 ', [p] , (error, results) => {
+          if (error) {
+            throw error
+            console.log('cccc')
+          } else {
+            console.log(results)
+            console.log('zmieniono pokoj nr ' + numer_pokoju +' na wolny')
+          }
+        })
+
+        
+      })
     }
-    response.status(200).send(`Usunięto rezerwację: ${r}`)
+
   })
+
+
+
+
+
 }
 /*
 function choose_free_rooms(free_rooms){
