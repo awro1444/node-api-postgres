@@ -22,6 +22,7 @@ app.get('/', (request, response) => {
     response.write(data);
     response.end();
   })
+  //var eh = document.getElementById('pokoje');
   //response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
@@ -46,10 +47,12 @@ app.get('/index4.html', (request, response) => {
 
 app.get('/index3.html', (request, response) => {
   fs.readFile('stronka/index3.html', function(err, data) {
+    //getPokoje_site();
     response.writeHead(200, {'Content-Type': 'text/html'});
     response.write(data);
     response.end();
   })
+  //getPokoje_site();
   ///response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 

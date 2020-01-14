@@ -1,5 +1,9 @@
 const Pool = require('pg').Pool
 
+//const bodyParser = require('body-parser')
+var fs = require('fs')
+var publicDir = require('path').join(__dirname,'/stronka');
+
 //database user but how to share a database XD?
 const pool = new Pool({
   user: 'me',
@@ -30,16 +34,28 @@ const getPokoje = (request, response) => {
 }
 
 const getWolnepokoje = (request, response) => {
-
   pool.query('SELECT * FROM pokoje where dostepnosc=true', (error, results) => {
     if (error) {
       throw error
     }
     var wp = JSON.stringify(results.rows);
-    choose_free_rooms(wp)
+    //choose_free_rooms(wp)
     //console.log(wp);
-    response.status(200).json(results.rows)
+
+    fs.readFile('stronka/index3.html', function(err, data) {
+      response.writeHead(200, {'Content-Type': 'text/html'});
+      //response.send(wp)
+      response.write(data);
+      response.end();
+
+    })
+
+    //response.status(200).json(results.rows)
+      //getPokoje_site(wp);
+
+
   })
+
 }
 
 const getStandardy = (request, response) => {
@@ -85,7 +101,7 @@ const deleteRezerwacja = (request, response) => {
     response.status(200).send(`Usunięto rezerwację: ${r}`)
   })
 }
-
+/*
 function choose_free_rooms(free_rooms){
   console.log(free_rooms);
   var list = free_rooms;
@@ -125,8 +141,39 @@ function Headers(list, selector) {
                 }
             }
   }
+*/
+/*
+function getPokoje_site(){
+  console.log('haha');
+}*/
+/*
+  var table = document.getElementById("pokoje");
+  var row = table.insertRow(0);
+
+// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+var cell1 = row.insertCell(0);
+var cell2 = row.insertCell(1);
+
+// Add some text to the new cells:
+cell1.innerHTML = "NEW CELL1";
+cell2.innerHTML = "NEW CELL2";
+*/
+
 
 /*
+  const getPokoje_site = (request, response) => {
+    pool.query('SELECT * FROM pokoje', (error, results) => {
+      if (error) {
+        throw error
+      }
+      var wp = JSON.stringify(results.rows);
+      //choose_free_rooms(wp)
+      console.log(wp);
+      //response.status(200).json(results.rows)
+    })
+  }
+
+
 const updateUser = (request, response) => {
   const id = parseInt(request.params.id)
   const { name, email } = request.body
@@ -161,6 +208,7 @@ module.exports = {
   getStandardy,
   createRezerwacja,
   deleteRezerwacja,
+  //getPokoje_site,
   /*
   createUser,
   updateUser,
