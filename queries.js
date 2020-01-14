@@ -132,8 +132,6 @@ const deleteRezerwacja = (request, response) => {
             console.log('zmieniono pokoj nr ' + numer_pokoju +' na wolny')
           }
         })
-
-        
       })
     }
 
