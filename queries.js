@@ -38,7 +38,7 @@ const getRezerwacje = (request, response) => {
 
 const getPokoje = (request, response) => {
 
-  pool.query('SELECT * FROM pokoje', (error, results) => {
+  pool.query('SELECT * FROM pokoje order by p', (error, results) => {
     if (error) {
       throw error
     }

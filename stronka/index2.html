@@ -19,7 +19,7 @@
   <br>Nazwisko<br>
 	<input type="text" name="nazwisko">
 	<br>Wybierz standard<br>
-	<select name="s" id= standard>
+	<select name="s" id= standard class= standard>
 		 <option value="1">Królewski</option>
 		 <option value="2">500+</option>
 		 <option value="3">Nudny</option>
@@ -34,7 +34,7 @@
 </select>-->
 <div id = free_rooms></div>
 
-<select id=my_select name = "p"  onChange="location.reload()"></select>
+<select id=my_select name = "p"  onchange="window.location.reload()"></select>
   <br><br>
   <input type="submit" value="Rezerwuj">
 </form>
@@ -66,6 +66,12 @@ $(function() {
 							}
             });
         });
+				$(document).ready(function () {
+				            $(".standard").change(function () {
+				                location.reload();
+				                //alert('Reloading Page');
+				            });
+				        });
 
 
 				/*
