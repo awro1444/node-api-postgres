@@ -3,6 +3,7 @@
 <title>Love Hotel</title>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="style.css">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
 </head>
 <body style="height: auto; overflow: hidden;">
 <div align="center">
@@ -14,13 +15,28 @@
 		<form action="/deleterez" method="post">
   Wybierz rezerwację do usunięcia:<br></br>
 <!--- moze zeby sie rozwijalo??-->
-  <input type="text" name="r">
+  <select id=my_select name = "r"></select>
 	<br></br>
 	<input type="submit" value="Usuń rezerwację" >
   <br>
 </form>
 </div>
-
 </div>
 </body>
+<script>
+$(function() {
+            $.getJSON('rezerwacje.json', function(data) {
+							var list = data;
+						//	console.log(list);
+							var sel = document.getElementById('my_select');
+							for(var i = 0; i < data.length; i++) {
+								var opt = document.createElement('option');
+								opt.innerHTML = list[i]['r'];
+								opt.value = list[i]['r'];
+								sel.appendChild(opt);
+							}
+            });
+        });
+
+</script>
 </HTML>

@@ -3,6 +3,7 @@
 <title>Love Hotel</title>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="style.css">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
 </head>
 <body style="height: auto; overflow: hidden;">
 <div align="center">
@@ -18,7 +19,7 @@
   <br>Nazwisko<br>
 	<input type="text" name="nazwisko">
 	<br>Wybierz standard<br>
-	<select name="s">
+	<select name="s" id= standard>
 		 <option value="1">Królewski</option>
 		 <option value="2">500+</option>
 		 <option value="3">Nudny</option>
@@ -27,9 +28,13 @@
 		 <option value="6">Trójkąty i kwadraty</option>
 </select>
   <br>Numer pokoju<br>
-	<select name="p" id=free_rooms>
+
+<!--	<select name="p" id=free_rooms>
 		 <option value="201">201</option>
-</select>
+</select>-->
+<div id = free_rooms></div>
+
+<select id=my_select name = "p"  onChange="location.reload()"></select>
   <br><br>
   <input type="submit" value="Rezerwuj">
 </form>
@@ -37,4 +42,47 @@
 
 </div>
 </body>
+<script>
+
+$(function() {
+            $.getJSON('wolnepokoje.json', function(data) {
+							var list = data;
+							var x = document.getElementById("standard").value;
+							//location.reload();
+							/*x.onchange = function() {
+    						location.reload();
+							};*/
+							console.log(x);
+
+							var sel = document.getElementById('my_select');
+							for(var i = 0; i < data.length; i++) {
+								console.log(list[i]['s']);
+								if (list[i]['s'] == x){
+								var opt = document.createElement('option');
+								opt.innerHTML = list[i]['p'];
+								opt.value = list[i]['p'];
+								sel.appendChild(opt);
+							}
+							}
+            });
+        });
+
+
+				/*
+				$(function() {
+				            $.getJSON('wolnepokoje.json', function(data) {
+											var list = data;
+
+										//	console.log(list);
+											var sel = document.getElementById('my_select');
+											for(var i = 0; i < data.length; i++) {
+												var opt = document.createElement('option');
+												opt.innerHTML = list[i]['p'];
+												opt.value = list[i]['p'];
+												sel.appendChild(opt);
+											}
+				            });
+				        });*/
+
+</script>
 </HTML>

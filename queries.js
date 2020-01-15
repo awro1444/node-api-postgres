@@ -19,7 +19,20 @@ const getRezerwacje = (request, response) => {
     if (error) {
       throw error
     }
-    response.status(200).json(results.rows)
+    //response.status(200).json(results.rows)
+    var wp = JSON.stringify(results.rows);
+    fs.writeFile("stronka/rezerwacje.json", wp, function(err) {
+    if (err) {
+      //  console.log(err);
+    }
+    });
+    fs.readFile('stronka/rezerwacje.html', function(err, data) {
+      response.writeHead(200, {'Content-Type': 'text/html'});
+      //response.send(wp)
+      response.write(data);
+      response.end();
+
+    })
   })
 }
 
@@ -29,7 +42,20 @@ const getPokoje = (request, response) => {
     if (error) {
       throw error
     }
-    response.status(200).json(results.rows)
+    //response.status(200).json(results.rows)
+    var wp = JSON.stringify(results.rows);
+    fs.writeFile("stronka/pokoje.json", wp, function(err) {
+    if (err) {
+      //  console.log(err);
+    }
+    });
+    fs.readFile('stronka/index5.html', function(err, data) {
+      response.writeHead(200, {'Content-Type': 'text/html'});
+      //response.send(wp)
+      response.write(data);
+      response.end();
+
+    })
   })
 }
 
@@ -41,6 +67,11 @@ const getWolnepokoje = (request, response) => {
     var wp = JSON.stringify(results.rows);
     //choose_free_rooms(wp)
     //console.log(wp);
+    fs.writeFile("stronka/wolnepokoje.json", wp, function(err) {
+    if (err) {
+      //  console.log(err);
+    }
+    });
 
     fs.readFile('stronka/index3.html', function(err, data) {
       response.writeHead(200, {'Content-Type': 'text/html'});
@@ -64,7 +95,23 @@ const getStandardy = (request, response) => {
     if (error) {
       throw error
     }
-    response.status(200).json(results.rows)
+    //response.status(200).json(results.rows)
+    var wp = JSON.stringify(results.rows);
+    //choose_free_rooms(wp)
+    //console.log(wp);
+    fs.writeFile("stronka/standardy.json", wp, function(err) {
+    if (err) {
+      //  console.log(err);
+    }
+    });
+
+    fs.readFile('stronka/standardy.html', function(err, data) {
+      response.writeHead(200, {'Content-Type': 'text/html'});
+      //response.send(wp)
+      response.write(data);
+      response.end();
+
+    })
   })
 }
 /*
