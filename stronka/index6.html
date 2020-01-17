@@ -17,7 +17,7 @@
 <!--- moze zeby sie rozwijalo??-->
   <select id=my_select name = "r"></select>
 	<br></br>
-	<input type="submit" value="Usuń rezerwację" >
+	<input type="submit" value="Usuń rezerwację" onclick="window.location.href=window.location.href" >
   <br>
 </form>
 </div>
@@ -26,6 +26,7 @@
 <script>
 $(function() {
             $.getJSON('rezerwacje.json', function(data) {
+							console.log("pobranie jsona");
 							var list = data;
 						//	console.log(list);
 							var sel = document.getElementById('my_select');

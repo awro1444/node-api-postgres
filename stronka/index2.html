@@ -34,7 +34,8 @@
 </select>-->
 <div id = free_rooms></div>
 
-<select id=my_select name = "p"  onchange="window.location.reload()"></select>
+<!--<select id=my_select name = "p"  onchange="window.location.reload()"></select>-->
+<select id=my_select name = "p"  ></select>
   <br><br>
   <input type="submit" value="Rezerwuj">
 </form>
@@ -43,6 +44,7 @@
 </div>
 </body>
 <script>
+//var opt = document.createElement('option');
 
 $(function() {
             $.getJSON('wolnepokoje.json', function(data) {
@@ -50,7 +52,9 @@ $(function() {
 							var x = document.getElementById("standard").value;
 							//location.reload();
 							/*x.onchange = function() {
-    						location.reload();
+    						//location.reload();
+								console.log("aAAAAAA");
+
 							};*/
 							console.log(x);
 
@@ -62,13 +66,41 @@ $(function() {
 								opt.innerHTML = list[i]['p'];
 								opt.value = list[i]['p'];
 								sel.appendChild(opt);
-							}
+								}
 							}
             });
         });
 				$(document).ready(function () {
 				            $(".standard").change(function () {
-				                location.reload();
+											$.getJSON('wolnepokoje.json', function(data) {
+												var list = data;
+												var x = document.getElementById("standard").value;
+												console.log(x);
+												//location.reload();
+												/*x.onchange = function() {
+					    						//location.reload();
+													console.log("aAAAAAA");
+
+												};*/
+												console.log(x);
+												console.log("aaaaaaaa");
+
+												var sel = document.getElementById('my_select');
+												for(var i = 0; i < data.length; i++) {
+													console.log(list[i]['s']);
+
+													if (list[i]['s'] == x){
+													//var old_opt = document.getElementById('option');
+													//sel.children('option').remove();
+													var opt = document.createElement('option');
+
+													opt.innerHTML = list[i]['p'];
+													opt.value = list[i]['p'];
+													sel.appendChild(opt);
+													}
+												}
+					            });
+				                //location.reload();
 				                //alert('Reloading Page');
 				            });
 				        });
