@@ -114,18 +114,9 @@ const getStandardy = (request, response) => {
     })
   })
 }
-/*
-const getStandardy = (request, response) => {
-  const id = parseInt(request.params.id)
 
-  pool.query('SELECT * FROM standardy', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(200).json(results.rows)
-  })
-}
-*/
+
+
 const createRezerwacja = (request, response) => {
   const { imie, nazwisko, p } = request.body
 
@@ -133,6 +124,7 @@ const createRezerwacja = (request, response) => {
     if (error) {
       throw error
     }
+    updatetables()
     response.status(201).send(`<h4>Dodano rezerwację</h4>`)
   })
 
@@ -144,6 +136,7 @@ const createRezerwacja = (request, response) => {
       console.log('bbbbbbbb')
       console.log(results)
     }
+    updatetables()
     //response.status(200).send('Zmieniono status pokoju nr $1', [p])
   })
 }
@@ -177,17 +170,13 @@ const deleteRezerwacja = (request, response) => {
           } else {
             console.log(results)
             console.log('zmieniono pokoj nr ' + numer_pokoju +' na wolny')
+            updatetables()
           }
         })
       })
     }
 
   })
-
-
-
-
-
 }
 /*
 function choose_free_rooms(free_rooms){
@@ -288,6 +277,70 @@ const deleteUser = (request, response) => {
     response.status(200).send(`User deleted with ID: ${id}`)
   })
 }*/
+const updatetables = (request, response) => {
+
+  pool.query('SELECT * FROM standardy', (error, results) => {
+    if (error) {
+      throw error
+    }
+    var wp = JSON.stringify(results.rows);
+    fs.writeFile("stronka/standardy.json", wp, function(err) {
+    if (err) {
+      //  console.log(err);
+    }
+  })
+});
+
+  pool.query('SELECT * FROM pokoje', (error, results) => {
+    if (error) {
+      throw error
+    }
+    var wp = JSON.stringify(results.rows);
+    fs.writeFile("stronka/pokoje.json", wp, function(err) {
+    if (err) {
+      //  console.log(err);
+    }
+  })
+  });
+
+  pool.query('SELECT * FROM rezerwacje', (error, results) => {
+    if (error) {
+      throw error
+    }
+    var wp = JSON.stringify(results.rows);
+    fs.writeFile("stronka/rezerwacje.json", wp, function(err) {
+    if (err) {
+      //  console.log(err);
+    }
+  })
+  });
+
+  pool.query('SELECT * FROM pokoje where dostepnosc = true', (error, results) => {
+    if (error) {
+      throw error
+    }
+    var wp = JSON.stringify(results.rows);
+    fs.writeFile("stronka/wolnepokoje.json", wp, function(err) {
+    if (err) {
+      //  console.log(err);
+    }
+  })
+  });
+
+
+  pool.query('SELECT * FROM pokoje where dostepnosc = false', (error, results) => {
+    if (error) {
+      throw error
+    }
+    var wp = JSON.stringify(results.rows);
+    fs.writeFile("stronka/zajetepokoje.json", wp, function(err) {
+    if (err) {
+      //  console.log(err);
+    }
+  })
+});
+}
+
 
 module.exports = {
   getRezerwacje,
@@ -296,9 +349,5 @@ module.exports = {
   getStandardy,
   createRezerwacja,
   deleteRezerwacja,
-  //getPokoje_site,
-  /*
-  createUser,
-  updateUser,
-  deleteUser,*/
+  updatetables,
 }
