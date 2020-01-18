@@ -141,6 +141,16 @@ const createRezerwacja = (request, response) => {
   })
 }
 
+const updateRezerwacja = (request, response) => {
+  pool.query('UPDATE rezerwacje SET p = $1 WHERE p = $2', [nowy_pokoj, stary_pokoj], (error, results) => {
+    if (error) {
+      throw error
+    }
+    updatetables()
+    response.status(201).send(`<h4>Zaktualizowano rezerwację</h4>`)
+  })
+}
+
 const deleteRezerwacja = (request, response) => {
   //console.log(request.param("r"));
   var numer_pokoju;
