@@ -142,13 +142,44 @@ const createRezerwacja = (request, response) => {
 }
 
 const updateRezerwacja = (request, response) => {
-  pool.query('UPDATE rezerwacje SET p = $1 WHERE p = $2', [nowy_pokoj, stary_pokoj], (error, results) => {
+  const { r, p } = request.body
+
+  pool.query('SELECT p FROM rezerwacje WHERE r = $1', [r], (error, results) => {
+    if (error) {
+      throw error
+    }else {
+      var pokoj= results.rows[0].p
+      pool.query('UPDATE pokoje SET dostepnosc = true WHERE p = $1 ', [pokoj] , (error, results) => {
+        if (error) {
+          throw error
+          console.log('cccc')
+        } else {
+          console.log(results)
+          console.log('zmieniono pokoj nr ' + pokoj +' na wolny')
+          updatetables()
+        }
+      })
+    }
+
+  pool.query('UPDATE rezerwacje SET p = $1 WHERE r = $2', [p, r], (error, results) => {
     if (error) {
       throw error
     }
+    pool.query('UPDATE pokoje SET dostepnosc = false WHERE p = $1 ', [p] , (error, results) => {
+      if (error) {
+        throw error
+        console.log('cccc')
+      } else {
+        console.log(results)
+        console.log('zmieniono pokoj nr ' + p +' na zajety')
+        updatetables()
+      }
+    })
+    console.log("edytowano rezerwacje");
     updatetables()
     response.status(201).send(`<h4>Zaktualizowano rezerwację</h4>`)
   })
+})
 }
 
 const deleteRezerwacja = (request, response) => {
@@ -359,5 +390,6 @@ module.exports = {
   getStandardy,
   createRezerwacja,
   deleteRezerwacja,
+  updateRezerwacja,
   updatetables,
 }

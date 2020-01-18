@@ -33,6 +33,7 @@ app.get('/standardy', db.getStandardy)
 app.get('/wolnepokoje', db.getWolnepokoje)
 app.post('/dorezerwacja', db.createRezerwacja)
 app.post('/deleterez', db.deleteRezerwacja)
+app.post('/updaterez', db.updateRezerwacja)
 //app.put('/users/:id', db.updateUser)
 //app.delete('/users/:id', db.deleteUser)
 
@@ -73,6 +74,16 @@ app.post('/index2.html', (request, response) => {
   })
   //response.json({ info: 'Node.js, Express, and Postgres API' })
 })
+
+app.post('/edytuj_rezerwacje.html', (request, response) => {
+  fs.readFile('stronka/edytuj_rezerwacje.html', function(err, data) {
+    response.writeHead(200, {'Content-Type': 'text/html'});
+    response.write(data);
+    response.end();
+  })
+  //response.json({ info: 'Node.js, Express, and Postgres API' })
+})
+
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
