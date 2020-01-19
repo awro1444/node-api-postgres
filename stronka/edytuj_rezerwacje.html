@@ -31,7 +31,7 @@
   <!--<select id=my_select name = "p"  onchange="window.location.reload()"></select>-->
   <select id=select_room name = "p"  ></select>
 	<br></br>
-	<input type="submit" value="Zapisz zmiany" onclick="window.location.href=window.location.href" >
+	<input type="submit" value="Zapisz zmiany" onclick="window.location.href=window.location.href" id=robRezerwacje >
   <br>
 </form>
 </div>
@@ -74,6 +74,24 @@ $(function() {
 								sel.appendChild(opt);
 								}
 							}
+							var m = document.getElementById('robRezerwacje');
+							var d = document.getElementById('free_rooms');
+
+							if( $('#select_room').has('option').length <= 0 ) {
+							//	console.log('meh');
+								m.style.display = "none";
+								sel.style.display = "none";
+								var p = document.createElement('p');
+								p.id='napis';
+								p.innerHTML = "Brak pokojów  w tym standardzie :(";
+								d.appendChild(p);
+							}
+							else{
+							//	var e = document.getElementById('napis');
+								//d.removeChild(e);
+									m.style.display = "block";
+								sel.style.display = "block";
+							}
             });
 
             $(document).ready(function () {
@@ -106,6 +124,25 @@ $(function() {
     													sel.appendChild(opt);
     													}
     												}
+														var m = document.getElementById('robRezerwacje');
+														var d = document.getElementById('free_rooms');
+
+
+														if( $('#select_room').has('option').length <= 0 ) {
+														//	console.log('meh');
+														m.style.display = "none";
+															sel.style.display = "none";
+															var p = document.createElement('p');
+															p.id='napis';
+															p.innerHTML = "Brak pokojów  w tym standardzie :(";
+															d.appendChild(p);
+														}
+														else{
+															var e = document.getElementById('napis');
+															d.removeChild(e);
+															m.style.display = "block";
+															sel.style.display = "block";
+														}
     					            });
     				                //location.reload();
     				                //alert('Reloading Page');

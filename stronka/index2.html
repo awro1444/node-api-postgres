@@ -34,9 +34,9 @@
 </select>-->
 <div id = free_rooms></div>
 <!--<select id=my_select name = "p"  onchange="window.location.reload()"></select>-->
-<select id=my_select name = "p"  ></select>
+<select id=my_select name = "p" class=myselect ></select>
   <br><br>
-  <input type="submit" value="Rezerwuj" >
+  <input type="submit" value="Rezerwuj" id=robRezerwacje >
 </form>
 </div>
 
@@ -58,6 +58,9 @@ $(function() {
 							console.log(x);
 
 							var sel = document.getElementById('my_select');
+							//sel.style.display = "block";
+
+
 							for(var i = 0; i < data.length; i++) {
 								console.log(list[i]['s']);
 								if (list[i]['s'] == x){
@@ -66,7 +69,29 @@ $(function() {
 								opt.value = list[i]['p'];
 								sel.appendChild(opt);
 								}
-							}
+
+						}
+						var m = document.getElementById('robRezerwacje');
+						var d = document.getElementById('free_rooms');
+
+						if( $('#my_select').has('option').length <= 0 ) {
+						//	console.log('meh');
+							m.style.display = "none";
+							sel.style.display = "none";
+							var p = document.createElement('p');
+							p.id='napis';
+							p.innerHTML = "Brak pokojów  w tym standardzie :(";
+							d.appendChild(p);
+						}
+						else{
+						//	var e = document.getElementById('napis');
+							//d.removeChild(e);
+								m.style.display = "block";
+							sel.style.display = "block";
+						}
+
+
+
             });
         });
 				$(document).ready(function () {
@@ -110,11 +135,32 @@ $(function() {
 													sel.appendChild(opt);
 													}
 												}
+												var m = document.getElementById('robRezerwacje');
+												var d = document.getElementById('free_rooms');
+
+
+												if( $('#my_select').has('option').length <= 0 ) {
+												//	console.log('meh');
+												m.style.display = "none";
+													sel.style.display = "none";
+													var p = document.createElement('p');
+													p.id='napis';
+													p.innerHTML = "Brak pokojów  w tym standardzie :(";
+													d.appendChild(p);
+												}
+												else{
+													var e = document.getElementById('napis');
+													d.removeChild(e);
+													m.style.display = "block";
+													sel.style.display = "block";
+												}
 					            });
 				                //location.reload();
 				                //alert('Reloading Page');
 				            });
 				        });
+
+
 								/*
 								$(document).on("submit","rezerwuj" function(){
 									//Code: Action (like ajax...)
