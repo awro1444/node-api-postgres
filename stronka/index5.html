@@ -13,7 +13,8 @@
 <h1>LOVE HOTEL</h1>
 </div>
 <div class="bg"></div>
-<div id = 'pokoje' align='center' style = 'left: 10%;top:60%; transform: translate(0%, 20%);'></div>
+
+<div id = 'pokoje' align='center' ></div>
 
 <!-- <iframe id='iframe' src = 'wolnepokoje.json'> </iframe>-->
 <!--<table>
@@ -70,11 +71,11 @@ $(function() {
 
                     // CREATE TABLE HEAD .
                     var tHead = document.createElement("thead");
-
+                    tHead.setAttribute('class','background_table');
 
                     // CREATE ROW FOR TABLE HEAD .
                     var hRow = document.createElement("tr");
-
+                    hRow.setAttribute('class','background_table');
                     // ADD COLUMN HEADER TO ROW OF TABLE HEAD.
                     for (var i = 0; i < col.length; i++) {
                         var th = document.createElement("th");

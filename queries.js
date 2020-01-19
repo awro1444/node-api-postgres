@@ -203,6 +203,7 @@ const deleteRezerwacja = (request, response) => {
           throw error;
         }
         response.status(200).send(`Usunięto rezerwację: ${r}`)
+        
 
         pool.query('UPDATE pokoje SET dostepnosc = true WHERE p = $1 ', [p] , (error, results) => {
           if (error) {

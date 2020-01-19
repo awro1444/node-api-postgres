@@ -13,7 +13,7 @@
 <div id="containers2" align='center'>
 	<div id="rcorners11">Dokonaj Rezerwacji
 		<p></p>
-		<form action="/doRezerwacja" method="post">
+<form action="/doRezerwacja" method="post" onsubmit="return validateForm()">
   <br>Imię<br>
   <input type="text" name="imie">
   <br>Nazwisko<br>
@@ -33,7 +33,6 @@
 		 <option value="201">201</option>
 </select>-->
 <div id = free_rooms></div>
-
 <!--<select id=my_select name = "p"  onchange="window.location.reload()"></select>-->
 <select id=my_select name = "p"  ></select>
   <br><br>
@@ -73,6 +72,15 @@ $(function() {
 				$(document).ready(function () {
 				            $(".standard").change(function () {
 											$.getJSON('wolnepokoje.json', function(data) {
+												$("#my_select").empty();
+												/*
+												var select = document.getElementById("my_select");
+												var length = select.options.length;
+												for (i = 0; i < length; i++) {
+													console.log("nygga");
+													select.remove(i);
+												}*/
+
 												var list = data;
 												var x = document.getElementById("standard").value;
 												console.log(x);
@@ -82,10 +90,13 @@ $(function() {
 													console.log("aAAAAAA");
 
 												};*/
+
+
 												console.log(x);
 												console.log("aaaaaaaa");
 
 												var sel = document.getElementById('my_select');
+
 												for(var i = 0; i < data.length; i++) {
 													console.log(list[i]['s']);
 
@@ -121,6 +132,14 @@ $(function() {
 											}
 				            });
 				        });*/
+								function validateForm() {
+								   var x = document.forms["myForm"]["fname"].value;
+									 var x = document.forms["myForm"]["fname"].value;
+								   if ( x == null || x == "" ) {
+								      alert("First name must be filled out");
+								      return false;
+								   }
+								}
 
 </script>
 </HTML>
