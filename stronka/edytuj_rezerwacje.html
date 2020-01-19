@@ -79,6 +79,7 @@ $(function() {
             $(document).ready(function () {
     				            $(".standard").change(function () {
     											$.getJSON('wolnepokoje.json', function(data) {
+														$("#select_room").empty();
     												var list = data;
     												var x = document.getElementById("standard").value;
     												console.log(x);

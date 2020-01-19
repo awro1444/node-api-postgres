@@ -125,7 +125,8 @@ const createRezerwacja = (request, response) => {
       throw error
     }
     updatetables()
-    response.status(201).send(`<h4>Dodano rezerwację</h4>`)
+    //response.status(201).send(`<h4>Dodano rezerwację</h4>`)
+
   })
 
   pool.query('UPDATE pokoje SET dostepnosc = false WHERE p = $1', [p], (error, results) => {
@@ -133,12 +134,24 @@ const createRezerwacja = (request, response) => {
       throw error
       console.log('aaaaaaaaaaa')
     } else {
+      updatetables()
       console.log('bbbbbbbb')
       console.log(results)
     }
     updatetables()
+
+
+      //response.json({ info: 'Node.js, Express, and Postgres API' })
+
     //response.status(200).send('Zmieniono status pokoju nr $1', [p])
+
   })
+  fs.readFile('stronka/index7.html', function(err, data) {
+    response.writeHead(200, {'Content-Type': 'text/html'});
+    response.write(data);
+    response.end();
+  })
+
 }
 
 const updateRezerwacja = (request, response) => {
@@ -177,8 +190,13 @@ const updateRezerwacja = (request, response) => {
     })
     console.log("edytowano rezerwacje");
     updatetables()
-    response.status(201).send(`<h4>Zaktualizowano rezerwację</h4>`)
+    //response.status(201).send(`<h4>Zaktualizowano rezerwację</h4>`)
   })
+})
+fs.readFile('stronka/index9.html', function(err, data) {
+  response.writeHead(200, {'Content-Type': 'text/html'});
+  response.write(data);
+  response.end();
 })
 }
 
@@ -202,8 +220,9 @@ const deleteRezerwacja = (request, response) => {
         if (error) {
           throw error;
         }
-        response.status(200).send(`Usunięto rezerwację: ${r}`)
-        
+        updatetables()
+        //response.status(200).send(`Usunięto rezerwację: ${r}`)
+
 
         pool.query('UPDATE pokoje SET dostepnosc = true WHERE p = $1 ', [p] , (error, results) => {
           if (error) {
@@ -218,6 +237,11 @@ const deleteRezerwacja = (request, response) => {
       })
     }
 
+  })
+  fs.readFile('stronka/index8.html', function(err, data) {
+    response.writeHead(200, {'Content-Type': 'text/html'});
+    response.write(data);
+    response.end();
   })
 }
 /*

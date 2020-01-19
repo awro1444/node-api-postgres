@@ -83,6 +83,32 @@ app.post('/edytuj_rezerwacje.html', (request, response) => {
   })
   //response.json({ info: 'Node.js, Express, and Postgres API' })
 })
+app.post('/index7.html', (request, response) => {
+  fs.readFile('stronka/index7.html', function(err, data) {
+    response.writeHead(200, {'Content-Type': 'text/html'});
+    response.write(data);
+    response.end();
+  })
+  //response.json({ info: 'Node.js, Express, and Postgres API' })
+})
+
+app.post('/index8.html', (request, response) => {
+  fs.readFile('stronka/index8.html', function(err, data) {
+    response.writeHead(200, {'Content-Type': 'text/html'});
+    response.write(data);
+    response.end();
+  })
+  //response.json({ info: 'Node.js, Express, and Postgres API' })
+})
+
+app.post('/index9.html', (request, response) => {
+  fs.readFile('stronka/index9.html', function(err, data) {
+    response.writeHead(200, {'Content-Type': 'text/html'});
+    response.write(data);
+    response.end();
+  })
+  //response.json({ info: 'Node.js, Express, and Postgres API' })
+})
 
 
 app.listen(port, () => {

@@ -13,11 +13,11 @@
 <div id="containers2" align='center'>
 	<div id="rcorners11">Dokonaj Rezerwacji
 		<p></p>
-<form action="/doRezerwacja" method="post" onsubmit="return validateForm()">
+<form action="/doRezerwacja" method="post" class=rezerwuj>
   <br>Imię<br>
-  <input type="text" name="imie">
+  <input type="text" name="imie" required>
   <br>Nazwisko<br>
-	<input type="text" name="nazwisko">
+	<input type="text" name="nazwisko" required>
 	<br>Wybierz standard<br>
 	<select name="s" id= standard class= standard>
 		 <option value="1">Królewski</option>
@@ -36,7 +36,7 @@
 <!--<select id=my_select name = "p"  onchange="window.location.reload()"></select>-->
 <select id=my_select name = "p"  ></select>
   <br><br>
-  <input type="submit" value="Rezerwuj">
+  <input type="submit" value="Rezerwuj" >
 </form>
 </div>
 
@@ -115,7 +115,11 @@ $(function() {
 				                //alert('Reloading Page');
 				            });
 				        });
-
+								/*
+								$(document).on("submit","rezerwuj" function(){
+									//Code: Action (like ajax...)
+									alert("Zrobiono rezerwacje!");
+								})*/
 
 				/*
 				$(function() {
@@ -132,6 +136,7 @@ $(function() {
 											}
 				            });
 				        });*/
+								/*
 								function validateForm() {
 								   var x = document.forms["myForm"]["fname"].value;
 									 var x = document.forms["myForm"]["fname"].value;
@@ -139,7 +144,7 @@ $(function() {
 								      alert("First name must be filled out");
 								      return false;
 								   }
-								}
+								}*/
 
 </script>
 </HTML>
