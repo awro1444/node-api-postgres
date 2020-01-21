@@ -3,10 +3,7 @@
 <title>Love Hotel</title>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="style.css">
-<script  type="text/javascript" src = "C:\Users\Rozanna\Documents\GitHub\node-api-postgres\queries.js"></script>
-<script  type="text/javascript" src = "C:\Users\Rozanna\Documents\GitHub\node-api-postgres\index.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
-<script type="text/javascript" src="wolnepokoje.json"></script>
 </head>
 <body style="height: auto;">
 <div align="center">
@@ -42,6 +39,7 @@ $(function() {
 
             });
         });*/
+
         $(function() {
                     $.getJSON('standardy.json', function(data) {
                       var noOfContacts = data.length;
@@ -97,6 +95,7 @@ $(function() {
                         for (var j = 0; j < col.length; j++) {
                           var td = document.createElement("td");
                           td.innerHTML = data[i][col[j]];
+
                           bRow.appendChild(td);
                         }
                         tBody.appendChild(bRow)

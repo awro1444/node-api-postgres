@@ -36,6 +36,7 @@ const getRezerwacje = (request, response) => {
   })
 }
 
+
 const getPokoje = (request, response) => {
 
   pool.query('SELECT * FROM pokoje order by p', (error, results) => {
@@ -120,84 +121,157 @@ const getStandardy = (request, response) => {
 const createRezerwacja = (request, response) => {
   const { imie, nazwisko, p } = request.body
 
-  pool.query('INSERT INTO rezerwacje (imie, nazwisko, p) VALUES ($1, $2,$3)', [imie, nazwisko, p], (error, results) => {
-    if (error) {
-      throw error
+  pool.query('select dostepnosc from pokoje where p = $1', [p],(error, results)=>{
+    var wp = JSON.stringify(results.rows);
+    var e = JSON.parse(wp);
+    console.log(e[0]['dostepnosc']);
+    if(error){
+      throw error;
+      console.log('łeee');
     }
-    updatetables()
-    //response.status(201).send(`<h4>Dodano rezerwację</h4>`)
-
-  })
-
-  pool.query('UPDATE pokoje SET dostepnosc = false WHERE p = $1', [p], (error, results) => {
-    if (error) {
-      throw error
-      console.log('aaaaaaaaaaa')
-    } else {
-      updatetables()
-      console.log('bbbbbbbb')
-      console.log(results)
+    if(e[0]['dostepnosc']==false){
+      console.log("eh");
+      fs.readFile('stronka/index10.html', function(err, data) {
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        response.write(data);
+        response.end();
+      })
+      //response.send('ktoś już zajal!');
     }
-    updatetables()
+    else{
+      pool.query('INSERT INTO rezerwacje (imie, nazwisko, p) VALUES ($1, $2,$3)', [imie, nazwisko, p], (error, results) => {
+        if (error) {
+          throw error
+        }
+        updatetables()
+        //response.status(201).send(`<h4>Dodano rezerwację</h4>`)
+
+      })
+
+      pool.query('UPDATE pokoje SET dostepnosc = false WHERE p = $1', [p], (error, results) => {
+        if (error) {
+          throw error
+          console.log('aaaaaaaaaaa')
+        } else {
+          updatetables()
+          console.log('bbbbbbbb')
+          console.log(results)
+        }
+        updatetables()
 
 
-      //response.json({ info: 'Node.js, Express, and Postgres API' })
+          //response.json({ info: 'Node.js, Express, and Postgres API' })
 
-    //response.status(200).send('Zmieniono status pokoju nr $1', [p])
+        //response.status(200).send('Zmieniono status pokoju nr $1', [p])
 
+      })
+
+      fs.readFile('stronka/index7.html', function(err, data) {
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        response.write(data);
+        response.end();
+      })
+    }
   })
-  fs.readFile('stronka/index7.html', function(err, data) {
-    response.writeHead(200, {'Content-Type': 'text/html'});
-    response.write(data);
-    response.end();
-  })
+
+
 
 }
 
 const updateRezerwacja = (request, response) => {
   const { r, p } = request.body
+  updatetables();
+  console.log(r)
+  row = r.split(',');
+  console.log(row[0]);
 
-  pool.query('SELECT p FROM rezerwacje WHERE r = $1', [r], (error, results) => {
-    if (error) {
-      throw error
-    }else {
-      var pokoj= results.rows[0].p
-      pool.query('UPDATE pokoje SET dostepnosc = true WHERE p = $1 ', [pokoj] , (error, results) => {
-        if (error) {
-          throw error
-          console.log('cccc')
-        } else {
-          console.log(results)
-          console.log('zmieniono pokoj nr ' + pokoj +' na wolny')
-          updatetables()
-        }
+  pool.query('SELECT p FROM rezerwacje WHERE r = $1', [row[0]], (error, results) => {
+    console.log(results)
+    if (results.rowCount == 0 ){
+      console.log("TO TO");
+      updatetables()
+      fs.readFile('stronka/index10.html', function(err, data) {
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        response.write(data);
+        response.end();
+      })
+    }else if (results.rows[0].p!=row[1]) {
+      console.log("TO TO");
+      updatetables()
+      fs.readFile('stronka/index10.html', function(err, data) {
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        response.write(data);
+        response.end();
       })
     }
+    else{
+    //console.log(results)
+    //console.log("TO TO");
+   var pokoj= results.rows[0].p;
 
-  pool.query('UPDATE rezerwacje SET p = $1 WHERE r = $2', [p, r], (error, results) => {
+
+    //console.log(results.rows[0].p);
     if (error) {
-      throw error
+        //throw error
+        //if(results.rows[0].p)
     }
-    pool.query('UPDATE pokoje SET dostepnosc = false WHERE p = $1 ', [p] , (error, results) => {
-      if (error) {
-        throw error
-        console.log('cccc')
-      } else {
-        console.log(results)
-        console.log('zmieniono pokoj nr ' + p +' na zajety')
-        updatetables()
-      }
-    })
-    console.log("edytowano rezerwacje");
-    updatetables()
-    //response.status(201).send(`<h4>Zaktualizowano rezerwację</h4>`)
-  })
-})
-fs.readFile('stronka/index9.html', function(err, data) {
-  response.writeHead(200, {'Content-Type': 'text/html'});
-  response.write(data);
-  response.end();
-})
+    else{
+      pool.query('select dostepnosc from pokoje where p = $1', [p],(error, results)=>{
+        var wp = JSON.stringify(results.rows);
+        var e = JSON.parse(wp);
+        console.log(e[0]['dostepnosc']);
+        if(error){
+          throw error;
+          console.log('łeee');
+        }
+        if(e[0]['dostepnosc']==false || r[1] == pokoj ){
+          console.log("eh");
+          fs.readFile('stronka/index10.html', function(err, data) {
+            response.writeHead(200, {'Content-Type': 'text/html'});
+            response.write(data);
+            response.end();
+          })
+          //response.send('ktoś już zajal!');
+        }
+        else{
+          pool.query('UPDATE pokoje SET dostepnosc = true WHERE p = $1 ', [pokoj] , (error, results) => {
+            if (error) {
+              throw error
+              console.log('cccc')
+            } else {
+              console.log(results)
+              console.log('zmieniono pokoj nr ' + pokoj +' na wolny')
+              updatetables()
+            }
+          })
+          pool.query('UPDATE rezerwacje SET p = $1 WHERE r = $2', [p, row[0]], (error, results) => {
+            if (error) {
+              throw error
+            }
+            pool.query('UPDATE pokoje SET dostepnosc = false WHERE p = $1 ', [p] , (error, results) => {
+              if (error) {
+                throw error
+                console.log('cccc')
+              } else {
+                console.log(results)
+                console.log('zmieniono pokoj nr ' + p +' na zajety')
+                updatetables()
+              }
+            })
+            console.log("edytowano rezerwacje");
+            updatetables()
+            fs.readFile('stronka/index9.html', function(err, data) {
+              response.writeHead(200, {'Content-Type': 'text/html'});
+              response.write(data);
+              response.end();
+            })
+            //response.status(201).send(`<h4>Zaktualizowano rezerwację</h4>`)
+          })
+        }
+        })
+
+}
+}})
 }
 
 const deleteRezerwacja = (request, response) => {
@@ -205,10 +279,22 @@ const deleteRezerwacja = (request, response) => {
   var numer_pokoju;
   var p;
   const r = request.param("r");
+  //  pool.query('select r from rezerwacje where r = $1', [r],(error, results)=>{
+
   pool.query('SELECT p FROM rezerwacje WHERE r = $1', [r], (error, results) => {
     if (error) {
       throw error
-    } else {
+    }
+    else if(results.rowCount==0){
+      updatetables()
+      fs.readFile('stronka/index10.html', function(err, data) {
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        response.write(data);
+        response.end();
+      })
+
+    }
+    else {
       //console.log('pokoj numer: ')
       //console.log(results)
       console.log('pokoj:')
@@ -235,114 +321,18 @@ const deleteRezerwacja = (request, response) => {
           }
         })
       })
+      fs.readFile('stronka/index8.html', function(err, data) {
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        response.write(data);
+        response.end();
+      })
     }
 
   })
-  fs.readFile('stronka/index8.html', function(err, data) {
-    response.writeHead(200, {'Content-Type': 'text/html'});
-    response.write(data);
-    response.end();
-  })
-}
-/*
-function choose_free_rooms(free_rooms){
-  console.log(free_rooms);
-  var list = free_rooms;
-  var selector = '#table';
-  var cols = Headers(list, selector);
-  for (var i = 0; i < list.length; i++) {
-                var row = ('<tr/>');
-                for (var colIndex = 0; colIndex < cols.length; colIndex++)
-                {
-                    var val = list[i][cols[colIndex]];
 
-                    // If there is any key, which is matching
-                    // with the column name
-                    if (val == null) val = "";
-                        row.append(('<td/>').html(val));
-                }
-
-                // Adding each row to the table
-                $(selector).append(row);
-            }
 }
 
-function Headers(list, selector) {
-            var columns = [];
-            var header = ('<tr/>');
-
-            for (var i = 0; i < list.length; i++) {
-                var row = list[i];
-
-                for (var k in row) {
-                    if ($.inArray(k, columns) == -1) {
-                        columns.push(k);
-
-                        // Creating the header
-                        header.append(('<th/>').html(k));
-                    }
-                }
-            }
-  }
-*/
-/*
-function getPokoje_site(){
-  console.log('haha');
-}*/
-/*
-  var table = document.getElementById("pokoje");
-  var row = table.insertRow(0);
-
-// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-var cell1 = row.insertCell(0);
-var cell2 = row.insertCell(1);
-
-// Add some text to the new cells:
-cell1.innerHTML = "NEW CELL1";
-cell2.innerHTML = "NEW CELL2";
-*/
-
-
-/*
-  const getPokoje_site = (request, response) => {
-    pool.query('SELECT * FROM pokoje', (error, results) => {
-      if (error) {
-        throw error
-      }
-      var wp = JSON.stringify(results.rows);
-      //choose_free_rooms(wp)
-      console.log(wp);
-      //response.status(200).json(results.rows)
-    })
-  }
-
-
-const updateUser = (request, response) => {
-  const id = parseInt(request.params.id)
-  const { name, email } = request.body
-
-  pool.query(
-    'UPDATE users SET name = $1, email = $2 WHERE id = $3',
-    [name, email, id],
-    (error, results) => {
-      if (error) {
-        throw error
-      }
-      response.status(200).send(`User modified with ID: ${id}`)
-    }
-  )
-}
-
-const deleteUser = (request, response) => {
-  const id = parseInt(request.params.id)
-
-  pool.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(200).send(`User deleted with ID: ${id}`)
-  })
-}*/
+//updateuje nam pliki z tabelkami :')
 const updatetables = (request, response) => {
 
   pool.query('SELECT * FROM standardy', (error, results) => {
@@ -406,6 +396,7 @@ const updatetables = (request, response) => {
   })
 });
 }
+
 
 
 module.exports = {

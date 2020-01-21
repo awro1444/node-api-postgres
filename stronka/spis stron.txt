@@ -1,5 +1,0 @@
-index - strona główna OK
-index2 - po logowaniu, rezerwacja przez użytkownika - dodać alert po dobrej rezerwacji
-index3 - opis usługi, standardów 
-index4 - galeria zdjęć OK, zmienić zdjęcia XDDD
-index5 - tabelki itd po zalogowaniu przez admina XD

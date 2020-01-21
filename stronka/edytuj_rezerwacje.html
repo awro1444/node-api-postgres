@@ -31,7 +31,7 @@
   <!--<select id=my_select name = "p"  onchange="window.location.reload()"></select>-->
   <select id=select_room name = "p"  ></select>
 	<br></br>
-	<input type="submit" value="Zapisz zmiany" onclick="window.location.href=window.location.href" id=robRezerwacje >
+	<input type="submit" value="Zapisz zmiany"  id=robRezerwacje >
   <br>
 </form>
 </div>
@@ -47,10 +47,19 @@ $(function() {
 							for(var i = 0; i < data.length; i++) {
 								var opt = document.createElement('option');
 								opt.innerHTML = list[i]['imie'] + " " + list[i]['nazwisko'] + " - pokój: "+list[i]['p'] ;
-								opt.value = list[i]['r'];
+								opt.value = [list[i]['r'],list[i]['p']];
 								sel.appendChild(opt);
 							}
-
+							var m = document.getElementById('robRezerwacje');
+							var d = document.getElementById('free_rooms');
+							if( $('#my_select').has('option').length <= 0 ) {
+							//	console.log('meh');
+								m.style.display = "none";
+								var p = document.createElement('p');
+								p.id='napis';
+								p.innerHTML = "Brak Rezerwacji do edycji!";
+								d.appendChild(p);
+							}
 
             });
             $.getJSON('wolnepokoje.json', function(data) {
@@ -92,6 +101,17 @@ $(function() {
 									m.style.display = "block";
 								sel.style.display = "block";
 							}
+							var m = document.getElementById('robRezerwacje');
+							var d = document.getElementById('free_rooms');
+							if( $('#my_select').has('option').length <= 0 ) {
+							//	console.log('meh');
+								sel.style.display = "none";
+								m.style.display = "none";
+								var p = document.createElement('p');
+								p.id='napis';
+								p.innerHTML = "Brak Rezerwacji do edycji!";
+								d.appendChild(p);
+							}
             });
 
             $(document).ready(function () {
@@ -131,17 +151,30 @@ $(function() {
 														if( $('#select_room').has('option').length <= 0 ) {
 														//	console.log('meh');
 														m.style.display = "none";
-															sel.style.display = "none";
-															var p = document.createElement('p');
-															p.id='napis';
-															p.innerHTML = "Brak pokojów  w tym standardzie :(";
-															d.appendChild(p);
-														}
+														sel.style.display = "none";
+														if(document.getElementById('napis')!=null){
+														var e1 = document.getElementById('napis');
+														d.removeChild(e1);
+													}
+														var p = document.createElement('p');
+														p.id='napis';
+														p.innerHTML = "Brak pokojów  w tym standardzie :(";
+														d.appendChild(p);}
 														else{
 															var e = document.getElementById('napis');
 															d.removeChild(e);
 															m.style.display = "block";
 															sel.style.display = "block";
+														}
+
+														if( $('#my_select').has('option').length <= 0 ) {
+														//	console.log('meh');
+															sel.style.display = "none";
+															m.style.display = "none";
+															var p = document.createElement('p');
+															p.id='napis';
+															p.innerHTML = "Brak Rezerwacji do edycji!";
+															d.appendChild(p);
 														}
     					            });
     				                //location.reload();

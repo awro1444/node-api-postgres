@@ -129,7 +129,6 @@ $(function() {
 													//var old_opt = document.getElementById('option');
 													//sel.children('option').remove();
 													var opt = document.createElement('option');
-
 													opt.innerHTML = list[i]['p'];
 													opt.value = list[i]['p'];
 													sel.appendChild(opt);
@@ -141,13 +140,16 @@ $(function() {
 
 												if( $('#my_select').has('option').length <= 0 ) {
 												//	console.log('meh');
-												m.style.display = "none";
+												  m.style.display = "none";
 													sel.style.display = "none";
+													if(document.getElementById('napis')!=null){
+													var e1 = document.getElementById('napis');
+													d.removeChild(e1);
+												}
 													var p = document.createElement('p');
 													p.id='napis';
 													p.innerHTML = "Brak pokojów  w tym standardzie :(";
-													d.appendChild(p);
-												}
+													d.appendChild(p);}
 												else{
 													var e = document.getElementById('napis');
 													d.removeChild(e);

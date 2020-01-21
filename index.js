@@ -15,15 +15,12 @@ app.use(
     extended: true,
   })
 )
-
 app.get('/', (request, response) => {
   fs.readFile('stronka/index.html', function(err, data) {
     response.writeHead(200, {'Content-Type': 'text/html'});
     response.write(data);
     response.end();
   })
-  //var eh = document.getElementById('pokoje');
-  //response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
 //calling methods from queries.js
@@ -39,6 +36,15 @@ app.post('/updaterez', db.updateRezerwacja)
 
 app.get('/index4.html', (request, response) => {
   fs.readFile('stronka/index4.html', function(err, data) {
+    response.writeHead(200, {'Content-Type': 'text/html'});
+    response.write(data);
+    response.end();
+  })
+  //response.json({ info: 'Node.js, Express, and Postgres API' })
+})
+
+app.get('/index10.html', (request, response) => {
+  fs.readFile('stronka/index10.html', function(err, data) {
     response.writeHead(200, {'Content-Type': 'text/html'});
     response.write(data);
     response.end();
