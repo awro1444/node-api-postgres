@@ -8,7 +8,7 @@ var publicDir = require('path').join(__dirname,'/stronka');
 const pool = new Pool({
   user: 'me',
   host: 'localhost',
-  database: 'api',
+  database: 'DB_PROJ_BOCZAR_WRÓBLEWSKA',
   password: 'anka',
   port: 5432,
 })
